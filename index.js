@@ -17,7 +17,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/users', userRoute);
 
 app.listen(process.env.PORT, async (req, res) => {
-   res.send('Server Running...')
+   console.log('Server Running...')
+})
+
+app.get("*", async (req, res) => {
+   res.send('Hello world...')
 })
 
 module.exports = app
