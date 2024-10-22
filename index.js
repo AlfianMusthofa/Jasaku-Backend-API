@@ -16,4 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/users', userRoute);
 
-app.listen(process.env.PORT, () => console.log('Server Up...'))
+app.listen(process.env.PORT, async (req, res) => {
+   res.send('Server Running...')
+})
+
+module.exports = app
