@@ -20,6 +20,30 @@ const User = mongoose.Schema({
    dateBorn: {
       type: Date,
       required: true
+   },
+   user_image: {
+      type: String,
+      required: false
+   },
+   user_description: {
+      type: String,
+      required: false
+   },
+   user_languages: {
+      type: [String],
+      required: false
+   },
+   user_skills: {
+      type: [String],
+      required: false
+   },
+   member_since: {
+      type: Date,
+      required: false
+   },
+   certified: {
+      type: [String],
+      required: false
    }
 })
 

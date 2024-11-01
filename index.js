@@ -3,6 +3,7 @@ const cors = require('cors')
 const dotenv = require('dotenv')
 const db = require('./config/db')
 const userRoute = require('./routes/userRoute')
+const projectRoute = require('./routes/projectRoute')
 
 dotenv.config();
 db();
@@ -15,13 +16,10 @@ app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/users', userRoute);
+app.use('/gigs', projectRoute);
 
 app.listen(process.env.PORT, async (req, res) => {
    console.log('Server Running...')
-})
-
-app.get("*", async (req, res) => {
-   res.send('Hello world...')
 })
 
 module.exports = app

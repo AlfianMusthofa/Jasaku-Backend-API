@@ -78,7 +78,19 @@ const login = async (req, res) => {
          return res.status(401).json({ msg: 'Invalid password!' })
       }
 
-      res.json({ msg: 'Login successful', user: { username: user.username } });
+      res.json({
+         msg: 'Login successful', user: {
+            id: user._id.toString(),
+            username: user.username,
+            description: user.user_description || "",
+            languages: user.user_languages,
+            skills: user.user_skills,
+            image: user.user_image || "",
+            memberSince: user.member_since || new Date().toISOString(),
+            certified: user.certified || "",
+            phoneNumber: user.phoneNumber || ""
+         }
+      });
 
    } catch (error) {
 
@@ -108,9 +120,39 @@ const deleteUser = async (req, res) => {
 
 }
 
+const updateUser = async (req, res) => {
+
+   try {
+
+      const userId = req.params.id;
+
+      if (req.body.password) {
+         const salt = await bcrypt.genSalt(10);
+         req.body.password = await bcrypt.hash(req.body.password, salt);
+      }
+
+      const update = await User.findByIdAndUpdate(
+         userId,
+         { $set: req.body },
+         { new: true, runValidators: true }
+      )
+
+      if (!update) {
+         return res.status(404).json({ msg: 'User not found!' })
+      }
+
+      res.status(200).json({ msg: 'User has been updated!' })
+
+   } catch (error) {
+      res.status(500).json({ msg: error.message })
+   }
+
+}
+
 module.exports = {
    getAllUser,
    addUsers,
    login,
-   deleteUser
+   deleteUser,
+   updateUser
 }
