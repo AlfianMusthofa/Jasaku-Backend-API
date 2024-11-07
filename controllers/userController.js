@@ -21,7 +21,18 @@ const addUsers = async (req, res) => {
    try {
 
       // Extract data from request body
-      const { username, password, phoneNumber, gender, dateBorn } = req.body;
+      const { username,
+         password,
+         phoneNumber,
+         gender,
+         dateBorn,
+         user_image,
+         user_description,
+         user_languages,
+         user_skills,
+         member_since,
+         certified,
+         user_country } = req.body;
 
       // Check if email user already exist in database
       const existingUser = await User.findOne({ phoneNumber })
@@ -39,7 +50,14 @@ const addUsers = async (req, res) => {
          password: hashedPassword,
          phoneNumber,
          gender,
-         dateBorn
+         dateBorn,
+         user_image,
+         user_description,
+         user_languages,
+         user_skills,
+         member_since,
+         certified,
+         user_country
       })
 
       // save the user into database
@@ -84,11 +102,12 @@ const login = async (req, res) => {
             username: user.username,
             description: user.user_description || "",
             languages: user.user_languages,
-            skills: user.user_skills,
+            skills: user.user_skills ?? null,
             image: user.user_image || "",
             memberSince: user.member_since || new Date().toISOString(),
-            certified: user.certified || "",
-            phoneNumber: user.phoneNumber || ""
+            certified: user.certified || null,
+            phoneNumber: user.phoneNumber || "",
+            country: user.user_country || ""
          }
       });
 
@@ -108,7 +127,7 @@ const deleteUser = async (req, res) => {
 
       const deletedUser = await User.findByIdAndDelete(userId)
 
-      if (!deleteUser) {
+      if (!deletedUser) {
          res.status(404).json({ msg: 'User not found!' })
       }
 

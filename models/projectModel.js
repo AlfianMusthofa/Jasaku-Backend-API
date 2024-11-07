@@ -30,6 +30,10 @@ const Project = mongoose.Schema({
       type: String,
       required: false
    },
+   image2: {
+      type: String,
+      required: false
+   },
    phoneNumber: {
       type: String,
       required: true
@@ -53,6 +57,10 @@ const Project = mongoose.Schema({
    user_memberSince: {
       type: Date,
       require: false
+   },
+   user_image: {
+      type: String,
+      required: false
    }
 })
 

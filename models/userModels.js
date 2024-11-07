@@ -30,7 +30,7 @@ const User = mongoose.Schema({
       required: false
    },
    user_languages: {
-      type: [String],
+      type: String,
       required: false
    },
    user_skills: {
@@ -43,6 +43,10 @@ const User = mongoose.Schema({
    },
    certified: {
       type: [String],
+      required: false
+   },
+   user_country: {
+      type: String,
       required: false
    }
 })
